@@ -1,0 +1,334 @@
+@import "tailwindcss";
+
+/* --------------------------------------------------------------------------
+   Identidad Minerva — colores extraídos del logo
+   -------------------------------------------------------------------------- */
+@theme {
+  --color-paper: #fbf8f4;
+  --color-paper-2: #f4efe8;
+  --color-paper-3: #ece5dc;
+  --color-ink: #141217;
+  --color-ink-2: #3b3740;
+  --color-ink-soft: #625d68;
+  --color-line: #e7e0d6;
+
+  --color-m-red: #e0312f;
+  --color-m-orange: #f0643a;
+  --color-m-yellow: #f2b544;
+  --color-m-green: #3fae8a;
+  --color-m-blue: #4e9fd1;
+  --color-m-violet: #6a45a0;
+  --color-m-magenta: #d9307f;
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --shadow-soft: 0 1px 2px rgb(20 18 23 / 0.04), 0 8px 24px -8px rgb(20 18 23 / 0.08);
+  --shadow-lift: 0 2px 4px rgb(20 18 23 / 0.04), 0 24px 48px -16px rgb(20 18 23 / 0.18);
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-fade-up: fade-up 0.7s var(--ease-out-expo) both;
+
+  @keyframes marquee {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 14px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+:root {
+  --gradient-minerva: linear-gradient(
+    100deg,
+    var(--color-m-red) 0%,
+    var(--color-m-orange) 18%,
+    var(--color-m-yellow) 34%,
+    var(--color-m-magenta) 58%,
+    var(--color-m-violet) 80%,
+    var(--color-m-blue) 100%
+  );
+  --header-h: 72px;
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-m-magenta) 22%, transparent);
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-m-violet);
+    outline-offset: 3px;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 88rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 3rem);
+  }
+
+  .text-gradient {
+    background: var(--gradient-minerva);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-minerva {
+    background: var(--gradient-minerva);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.25rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--gradient-minerva);
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+  }
+
+  .serif-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* Botones */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding-inline: 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+      transform 0.35s var(--ease-out-expo),
+      background-color 0.25s,
+      color 0.25s,
+      box-shadow 0.35s var(--ease-out-expo),
+      opacity 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .btn-primary {
+    background: var(--color-ink);
+    color: #fff;
+    box-shadow: 0 10px 30px -12px rgb(20 18 23 / 0.5);
+  }
+  .btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--gradient-minerva);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-soft);
+  }
+  @media (hover: hover) {
+    .btn-primary:not(:disabled):hover::before {
+      opacity: 1;
+    }
+    .btn-primary:not(:disabled):hover {
+      box-shadow: 0 16px 36px -14px color-mix(in oklab, var(--color-m-magenta) 70%, transparent);
+    }
+    .btn-ghost:not(:disabled):hover {
+      background: var(--color-ink);
+      color: #fff;
+      border-color: var(--color-ink);
+    }
+  }
+  .btn-ghost {
+    background: rgb(255 255 255 / 0.6);
+    border: 1px solid var(--color-line);
+    color: var(--color-ink);
+    backdrop-filter: blur(8px);
+  }
+  .btn-wa {
+    background: #1faa59;
+    color: #fff;
+  }
+  @media (hover: hover) {
+    .btn-wa:hover {
+      background: #178a48;
+    }
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2.5rem;
+    padding: 0 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-line);
+    background: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition:
+      border-color 0.2s,
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .chip[aria-pressed="true"],
+  .chip[aria-checked="true"],
+  .chip[aria-current="true"] {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: #fff;
+  }
+
+  .field {
+    width: 100%;
+    min-height: 3rem;
+    border-radius: 0.9rem;
+    border: 1px solid var(--color-line);
+    background: #fff;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-m-violet);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-m-violet) 14%, transparent);
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--color-m-red);
+  }
+  .label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--color-ink-2);
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, var(--color-paper-2) 0%, var(--color-paper-3) 50%, var(--color-paper-2) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Elementos que GSAP revela: ocultos solo si JS está activo y hay movimiento */
+  .js-motion [data-reveal],
+  .js-motion [data-hero] {
+    visibility: hidden;
+  }
+  /* Solo opacidad: un transform aquí rompería los elementos fijados (pin) de ScrollTrigger */
+  .page-enter {
+    animation: page-fade 0.6s var(--ease-soft);
+  }
+}
+
+@keyframes page-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
